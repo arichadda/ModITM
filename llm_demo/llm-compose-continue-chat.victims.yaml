@@ -1,0 +1,40 @@
+version: '3.7'
+services:
+
+  codellama:
+    container_name: codellama
+    hostname: codellama
+    restart: always
+    build:
+      context: codellama
+      dockerfile: Dockerfile
+    image: 'moditm-llm-codellama:latest'
+    expose:
+      - 11434
+    ports:
+      - 11436:11434
+    volumes:
+      - '${PWD}/ollama:/root/.ollama'
+      # - '${PWD}/pcaps:/pcaps'
+    # command: serve 
+    # healthcheck:
+    #   test: curl --fail http://localhost:11434/api/tags || exit 1
+    #   interval: 30s
+    #   retries: 2
+    #   start_period: 20s
+    #   timeout: 2s
+    networks:
+      llm:
+        ipv4_address: 192.168.2.221
+    env_file:
+      - ./victims.env
+    tty: true
+    
+networks:
+  llm:
+    name: llm
+    driver: bridge
+    ipam:
+      config:
+        - subnet: 192.168.2.0/24
+          gateway: 192.168.2.1
