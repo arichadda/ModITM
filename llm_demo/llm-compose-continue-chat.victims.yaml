@@ -36,8 +36,6 @@ services:
     env_file:
       - path: .env
         required: true
-      # - path: ./attackers.env
-      #   required: false
     tty: true
     
 networks:
