@@ -8,6 +8,13 @@ services:
     build:
       context: codellama
       dockerfile: Dockerfile
+      args:
+        MODEL_FILE_NAME: ${MODEL_FILE_NAME}
+        MODEL_NAME: ${MODEL_NAME}
+        MODEL_TEMP: ${MODEL_TEMP}
+        MODEL_CONTEXT_LEN: ${MODEL_CONTEXT_LEN}
+        MODEL_SYSTEM_PROMPT: ${MODEL_SYSTEM_PROMPT}
+        SERVICE_NAME: ${SERVICE_NAME}
     image: 'moditm-llm-codellama:latest'
     expose:
       - 11434
@@ -27,7 +34,10 @@ services:
       llm:
         ipv4_address: 192.168.2.221
     env_file:
-      - ./victims.env
+      - path: .env
+        required: true
+      # - path: ./attackers.env
+      #   required: false
     tty: true
     
 networks:
