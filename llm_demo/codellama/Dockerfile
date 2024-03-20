@@ -7,6 +7,11 @@ ARG MODEL_CONTEXT_LEN
 ARG MODEL_SYSTEM_PROMPT
 ARG SERVICE_NAME
 
+ARG ORIGINAL_OLLAMA_HOST
+ARG ORIGINAL_OLLAMA_PORT
+ARG OLLAMA_HOST
+ARG OLLAMA_PORT
+
 RUN apt update && apt-get install -y curl tcpdump iproute2 screen
 
 COPY build_model_file.sh .

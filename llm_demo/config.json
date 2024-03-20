@@ -1,0 +1,14 @@
+{
+  "models": [
+    {
+      "title": "Ollama-Victim-CodeLlama",
+      "provider": "ollama",
+      "model": "victim-model",
+      "apiBase": "http://localhost:11436/"
+    }
+  ],
+  "slashCommands": [],
+  "customCommands": [],
+  "contextProviders": [],
+  "allowAnonymousTelemetry": false
+}

@@ -1,33 +1,36 @@
 version: "3.7"
 services:
-  # code_interceptor:
-  #   container_name: code_interceptor
-  #   hostname: code_interceptor
-  #   restart: always
-  #   build:
-  #     context: attackers/code_interceptor
-  #     dockerfile: Dockerfile
-  #   image: 'moditm-code_interceptor:latest'
-  #   cap_add:
-  #     - NET_ADMIN
-  #   environment:
-  #     ORIGINAL_OLLAMA_HOST: '192.168.2.221'
-  #     ORIGINAL_OLLAMA_PORT: 11434
-  #     OLLAMA_HOST: '192.168.2.64'
-  #     OLLAMA_PORT: 11434
-  #   volumes:
-  #     - '${PWD}/log:/var/log'
-  #     - '${PWD}/config:/config'
-  #     - '${PWD}/pcaps:/pcaps'
-  #   expose:
-  #     - 11434
-  #   ports:
-  #     - 11438:11434
-  #   networks:
-  #     llm:
-  #       ipv4_address: 192.168.2.32
-  #   stdin_open: true # docker run -i
-  #   tty: true        # docker run -t
+  code_interceptor:
+    container_name: code_interceptor
+    hostname: code_interceptor
+    restart: always
+    build:
+      context: attackers/code_interceptor
+      dockerfile: Dockerfile
+    image: 'moditm-code_interceptor:latest'
+    cap_add:
+      - NET_ADMIN
+    environment:
+      ORIGINAL_OLLAMA_HOST: ${ORIGINAL_OLLAMA_HOST}
+      ORIGINAL_OLLAMA_PORT: ${ORIGINAL_OLLAMA_PORT}
+      OLLAMA_HOST: ${OLLAMA_HOST}
+      OLLAMA_PORT: ${OLLAMA_PORT}
+    volumes:
+      - '${PWD}/log:/var/log'
+      - '${PWD}/config:/config'
+      - '${PWD}/pcaps:/pcaps'
+    expose:
+      - 11434
+    ports:
+      - 11438:11434
+    networks:
+      llm:
+        ipv4_address: 192.168.2.32
+    env_file:
+      - path: .env.override
+        required: true
+    # stdin_open: true # docker run -i
+    tty: true        # docker run -t
 
   badllama:
     container_name: badllama
@@ -50,6 +53,7 @@ services:
       - 11437:11434
     volumes:
       - "${PWD}/badllama:/root/.ollama"
+      - '${PWD}/pcaps:/pcaps'
     # command: serve
     # healthcheck:
     #   test: curl --fail http://localhost:11434/api/tags || exit 1

@@ -22,7 +22,7 @@ services:
       - 11436:11434
     volumes:
       - '${PWD}/ollama:/root/.ollama'
-      # - '${PWD}/pcaps:/pcaps'
+      - '${PWD}/pcaps:/pcaps'
     # command: serve 
     # healthcheck:
     #   test: curl --fail http://localhost:11434/api/tags || exit 1
